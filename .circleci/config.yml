@@ -11,8 +11,8 @@ jobs:
     - image: ariv3ra/terraform-gcp:tf-v0.14.2
     steps:
       - run: |
-          echo $CIRCLE_CONTINUATION_KEY
-          echo $CIRCLE_CONTINUATION
+          echo orgin: $CIRCLE_CONTINUATION_KEY
+          echo copy: $CIRCLE_CONTINUATION
   set-continuation-key:
     parameters:
       continuation-key:
@@ -33,6 +33,8 @@ workflows:
           name: set-key
       - console-log:
           name: get-key
+          requires:
+            - set-key
       - path-filtering/filter:
           name: check-updated-files
           mapping: |
