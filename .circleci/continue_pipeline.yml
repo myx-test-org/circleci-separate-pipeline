@@ -17,7 +17,7 @@ workflows:
     when: << pipeline.parameters.build-src-1 >>
     jobs:
       - continuation/continue:
-          name: cosigner-infrastructure
+          name: src-1
           configuration_path: .circleci/config-1.yml
   src2:
     when: << pipeline.parameters.build-src-2 >>
