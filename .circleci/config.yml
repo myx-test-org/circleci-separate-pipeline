@@ -10,7 +10,9 @@ jobs:
     docker:
     - image: ariv3ra/terraform-gcp:tf-v0.14.2
     steps:
-      - run: echo $CIRCLE_CONTINUATION_KEY
+      - run: |
+          echo $CIRCLE_CONTINUATION_KEY
+          echo $CIRCLE_CONTINUATION
   set-continuation-key:
     parameters:
       continuation-key:
@@ -27,6 +29,8 @@ jobs:
 workflows:
   check-updated-files:
     jobs:
+      - set-continuation-key
+      - console-log
       - path-filtering/filter:
           name: check-updated-files
           mapping: |
