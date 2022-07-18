@@ -1,1 +1,5 @@
 sol3
+same as sol1, adding the continue orb to send process to sub configuration
+
+FAIL:
+cannot pass CONTINUION_KEY to sub configuration

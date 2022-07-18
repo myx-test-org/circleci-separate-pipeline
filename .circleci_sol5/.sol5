@@ -1,1 +1,5 @@
-sol3
+sol5
+path filter at main config then path filter again at sub configuration
+
+FAIL:
+cannot pass CONTINUION_KEY

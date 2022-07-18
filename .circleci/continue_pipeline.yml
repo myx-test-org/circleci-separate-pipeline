@@ -1,0 +1,21 @@
+version: 2.1
+
+parameters:
+  build-src-1:
+    type: boolean
+    default: false
+  build-src-2:
+    type: boolean
+    default: false  
+
+workflows:
+  src1:
+    when: << pipeline.parameters.build-src-1 >>
+    jobs:
+      - approve-poc1:
+          type: approval
+  src2:
+    when: << pipeline.parameters.build-src-1 >>
+    jobs:
+      - approve-poc2:
+          type: approval
