@@ -10,12 +10,6 @@ aliases:
 
 
 
-parameters:
-  build-cosigner-infrastructure:
-    type: boolean
-    default: false
-
-
 
 workflows:
   build-cosigner:
