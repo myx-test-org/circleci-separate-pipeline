@@ -15,7 +15,7 @@ workflows:
       - approve-poc1:
           type: approval
   src2:
-    when: << pipeline.parameters.build-src-2 >>
+    when: << pipeline.parameters.build-src-1 >>
     jobs:
       - approve-poc2:
           type: approval
