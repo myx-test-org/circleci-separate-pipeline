@@ -1,9 +1,5 @@
 version: 2.1
 
-orbs:
-  continuation: circleci/continuation@0.3.1
-
-
 parameters:
   build-src-1:
     type: boolean
@@ -16,9 +12,8 @@ workflows:
   src1:
     when: << pipeline.parameters.build-src-1 >>
     jobs:
-      - continuation/continue:
-          name: src-1
-          configuration_path: .circleci/config-1.yml
+      - approve-poc1:
+          type: approval
   src2:
     when: << pipeline.parameters.build-src-2 >>
     jobs:
