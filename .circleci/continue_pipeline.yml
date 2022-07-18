@@ -9,6 +9,7 @@ parameters:
     default: false  
   continuation-key:
     type: string
+    default: ""
 
 jobs:
   console-log:
