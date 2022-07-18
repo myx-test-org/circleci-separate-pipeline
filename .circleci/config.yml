@@ -21,7 +21,7 @@ jobs:
     docker:
     - image: ariv3ra/terraform-gcp:tf-v0.14.2
     steps:
-      - run: echo "export CIRCLE_CONTINUATION_KEY=<< pipeline.parameters.continuation-key >>" >> $BASH_ENV
+      - run: echo "export CIRCLE_CONTINUATION=$CIRCLE_CONTINUATION_KEY" >> $BASH_ENV
 
 
 
