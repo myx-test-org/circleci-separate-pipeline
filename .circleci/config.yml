@@ -31,11 +31,11 @@ workflows:
     jobs:
       - set-continuation-key
       - console-log
-      - path-filtering/filter:
-          name: check-updated-files
-          mapping: |
-            ./.* continuation_key $CIRCLE_CONTINUATION
-            app/src1/.* build-src-1 true
-            app/src2/.* build-src-2 true
-          base-revision: main
-          config-path: .circleci/continue_pipeline.yml
+      # - path-filtering/filter:
+      #     name: check-updated-files
+      #     mapping: |
+      #       ./.* continuation_key $CIRCLE_CONTINUATION
+      #       app/src1/.* build-src-1 true
+      #       app/src2/.* build-src-2 true
+      #     base-revision: main
+      #     config-path: .circleci/continue_pipeline.yml
