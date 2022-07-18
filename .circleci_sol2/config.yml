@@ -1,0 +1,105 @@
+version: 2.1
+
+setup: true
+
+orbs:
+  path-filtering: circleci/path-filtering@0.1.3
+  # continuation: circleci/continuation@0.3.1
+
+
+parameters:
+  build-cosigner-infrastructure:
+    type: boolean
+    default: false
+  build-data-migration:
+    type: boolean
+    default: false
+  
+
+
+
+jobs:
+  check-updated-files:
+    docker:
+      - image: cimg/elixir:1.11.4
+    parameters:
+      path:
+        type: string
+        default: ./*
+      xxx:
+        type: env_var_name
+        default: BUILD_COSIGNER_INFRASTRUCTURE
+      
+    steps:
+      - checkout
+      - run: |
+          echo << parameters.path >>
+          ls -a
+          LATEST_COMMIT=$(git rev-parse HEAD)
+          TARGET_FOLDER_COMMIT=$(git log -1 --format=format:%H --full-diff << parameters.path >>)
+          echo LATEST_COMMIT: $LATEST_COMMIT
+          echo TARGET_FOLDER_COMMIT: $TARGET_FOLDER_COMMIT
+          
+          if [ $LATEST_COMMIT = $TARGET_FOLDER_COMMIT ]; then
+            echo "export BUILD_COSIGNER_INFRASTRUCTURE=false" >> $BASH_ENV
+      
+          fi
+      - run: |
+          echo xxx: ${BUILD_COSIGNER_INFRASTRUCTURE}
+  job2:
+    docker:
+      - image: cimg/elixir:1.11.4
+    steps:
+      - run: |
+          echo xxx: ${BUILD_COSIGNER_INFRASTRUCTURE}
+    
+
+
+workflows:
+
+  check-updated-files:
+    jobs:
+      - check-updated-files:
+          path: "./app/src1"
+      - job2:
+          requires: 
+            - check-updated-files
+  # separate-pipeline:
+  #   when: << pipeline.parameters.xxx >>
+  #   jobs:
+  #     - continuation/continue:
+  #         configuration_path: .circleci/cosigner-infrastructure.yml
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      # - path-filtering/filter:
+      #     name: check-updated-files
+      #     # 3-column, whitespace-delimited mapping. One mapping per
+      #     # line:
+      #     # <regex path-to-test> <parameter-to-set> <value-of-pipeline-parameter>
+      #     mapping: |
+      #       ./* circle-continuation-key $CIRCLE_CONTINUATION_KEY
+      #       infrastructure/fireblocks_cosigner/.* build-cosigner-infrastructure true
+      #       app/priv/repo/data_migrations/.* build-data-migration true
+      #     base-revision: main
+      #     config-path: .circleci/workflow.yml
+      
+      
+      # - continuation/continue:
+      #     name: cosigner-infrastructure
+      #     configuration_path: .circleci/cosigner-infrastructure.yml

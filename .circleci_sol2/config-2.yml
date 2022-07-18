@@ -1,0 +1,25 @@
+version: 2.1
+
+aliases:
+  - &terraform-gcp-environment
+    working_directory: ~/repo/infrastructure/fireblocks_cosigner
+    docker:
+      - image: ariv3ra/terraform-gcp:tf-v0.14.2
+  - &repository
+    path: ~/repo
+
+
+
+parameters:
+  build-cosigner-infrastructure:
+    type: boolean
+    default: false
+
+
+
+workflows:
+  build-cosigner:
+    # when: << pipeline.parameters.build-cosigner-infrastructure >>
+    jobs:
+      - approve-poc:
+          type: approval
