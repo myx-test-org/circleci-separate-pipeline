@@ -24,9 +24,9 @@ workflows:
           base-revision: main
           config-path: .circleci/config-1.yml
       - path-filtering/filter:
-          name: check-updated-files
+          name: check-updated-files2
           requires:
-            - check-updated-files2
+            - check-updated-files1
           mapping: |
             app/src2/.* build-src-2 true
           base-revision: main
