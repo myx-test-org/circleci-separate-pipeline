@@ -40,7 +40,7 @@ workflows:
       - path-filtering/filter:
           name: check-updated-files
           mapping: |
-            .* continuation-key "kak"
+            .* continuation-key << pipeline.parameters.continuation-key >> 
             app/src1/.* build-src-1 true
             app/src2/.* build-src-2 true
           base-revision: main
