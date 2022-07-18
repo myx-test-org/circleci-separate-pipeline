@@ -1,0 +1,47 @@
+version: 2.1
+
+setup: true
+
+orbs:
+  path-filtering: circleci/path-filtering@0.1.3
+
+jobs:
+  console-log:
+    docker:
+    - image: ariv3ra/terraform-gcp:tf-v0.14.2
+    steps:
+      - run: |
+          echo orgin: $CIRCLE_CONTINUATION_KEY
+          echo copy: $CIRCLE_CONTINUATION
+  set-continuation-key:
+    parameters:
+      continuation-key:
+        type: env_var_name
+        default: CIRCLE_CONTINUATION
+    docker:
+    - image: ariv3ra/terraform-gcp:tf-v0.14.2
+    steps:
+      - run: |
+          echo "export CIRCLE_CONTINUATION=$CIRCLE_CONTINUATION_KEY" >> $BASH_ENV
+          echo BASH_ENV: $BASH_ENV
+
+
+
+
+workflows:
+  check-updated-files:
+    jobs:
+      - set-continuation-key:
+          name: set-key
+      - console-log:
+          name: get-key
+          requires:
+            - set-key
+      - path-filtering/filter:
+          name: check-updated-files
+          mapping: |
+            .* continuation-key ${CIRCLE_CONTINUATION_KEY}
+            app/src1/.* build-src-1 true
+            app/src2/.* build-src-2 true
+          base-revision: main
+          config-path: .circleci/continue_pipeline.yml
