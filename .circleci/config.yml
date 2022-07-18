@@ -11,6 +11,15 @@ jobs:
     - image: ariv3ra/terraform-gcp:tf-v0.14.2
     steps:
       - run: echo $CIRCLE_CONTINUATION_KEY
+  set-continuation-key:
+    parameters:
+      continuation-key:
+        type: env_var_name
+        default: CIRCLE_CONTINUATION
+    docker:
+    - image: ariv3ra/terraform-gcp:tf-v0.14.2
+    steps:
+      - run: echo "export CIRCLE_CONTINUATION_KEY=<< pipeline.parameters.continuation-key >>" >> $BASH_ENV
 
 
 
@@ -21,7 +30,7 @@ workflows:
       - path-filtering/filter:
           name: check-updated-files
           mapping: |
-            ./.* continuation_key $CIRCLE_CONTINUATION_KEY
+            ./.* continuation_key << pipeline.parameters.continuation-key >>
             app/src1/.* build-src-1 true
             app/src2/.* build-src-2 true
           base-revision: main
