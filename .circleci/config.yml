@@ -21,7 +21,7 @@ workflows:
       - path-filtering/filter:
           name: check-updated-files
           mapping: |
-            .* continuation_key $CIRCLE_CONTINUATION_KEY
+            ./.* continuation_key $CIRCLE_CONTINUATION_KEY
             app/src1/.* build-src-1 true
             app/src2/.* build-src-2 true
           base-revision: main
