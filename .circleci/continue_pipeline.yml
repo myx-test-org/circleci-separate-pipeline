@@ -16,7 +16,10 @@ jobs:
     docker:
     - image: ariv3ra/terraform-gcp:tf-v0.14.2
     steps:
-      - run: echo << pipeline.parameters.continuation-key >>
+      - run: |
+          echo kak << pipeline.parameters.continuation-key >>
+          echo 1 << pipeline.parameters.build-src-1 >>
+          echo 2 << pipeline.parameters.build-src-2 >>
 
 
 workflows:
