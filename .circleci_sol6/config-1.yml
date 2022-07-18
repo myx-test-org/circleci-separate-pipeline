@@ -19,7 +19,6 @@ parameters:
 
 workflows:
   build-cosigner:
-    # when: << pipeline.parameters.build-cosigner-infrastructure >>
     jobs:
       - approve-poc:
           type: approval
