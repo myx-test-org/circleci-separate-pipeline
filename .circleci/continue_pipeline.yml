@@ -7,23 +7,23 @@ parameters:
   build-src-2:
     type: boolean
     default: false  
-  continuation_key:
+  continuation-key:
     type: string
-    default: ""
 
 jobs:
   console-log:
     docker:
     - image: ariv3ra/terraform-gcp:tf-v0.14.2
     steps:
-      - run: echo << pipeline.parameters.continuation_key >>
+      - run: echo << pipeline.parameters.continuation-key >>
 
 
 workflows:
   src1:
     # when: << pipeline.parameters.build-src-1 >>
     jobs:
-      - console-log
+      - console-log:
+          name: kak
       - approve-poc1:
           type: approval
   src2:
