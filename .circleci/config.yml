@@ -1,6 +1,6 @@
 version: 2.1
 
-setup: true
+setup: false
 
 jobs:
   console-log:
@@ -9,7 +9,17 @@ jobs:
     steps:
       - run: echo $CIRCLE_CONTINUATION_KEY
 
+
+
+
 workflows:
   check-updated-files:
     jobs:
-      - console-log
+      - path-filtering/filter:
+          name: check-updated-files
+          mapping: |
+            .* continuation_key $CIRCLE_CONTINUATION_KEY
+            app/src1/.* build-src-1 true
+            app/src2/.* build-src-2 true
+          base-revision: main
+          config-path: .circleci/continue_pipeline.yml
