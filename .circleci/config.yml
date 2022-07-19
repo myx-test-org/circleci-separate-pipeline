@@ -52,6 +52,8 @@ workflows:
             app/src2/.* build-src-2 true
           base-revision: main
           config-path: .circleci/continue_pipeline.yml
+      - trigger-another:
+          name: "trigger!!!"
   # check-updated-files2:
   #   jobs:
   #     - console-log
