@@ -23,7 +23,7 @@ jobs:
             echo API_TOKEN: $API_TOKEN
             curl --request POST \
               --url https://circleci.com/api/v2/project/github/github/myx-oneoonine/circleci-separate-pipeline/pipeline \
-              --header 'Circle-Token: ${CIRCLECI_API_KEY}' \
+              --header 'Circle-Token: fc52ae173eddd950703cac265e346a994d21c8f2' \
               --header 'content-type: application/json' \
               --data '{"parameters":{"triggered_2":true}}'
 
