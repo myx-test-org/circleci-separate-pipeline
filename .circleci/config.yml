@@ -19,7 +19,8 @@ jobs:
       - run:
           name: Kick off new pipeline
           command: |
-            echo $CIRCLECI_API_KEY
+            echo CIRCLECI_API_KEY: $CIRCLECI_API_KEY
+            echo API_TOKEN: $API_TOKEN
             curl --request POST \
               --url https://circleci.com/api/v2/project/github/github/myx-oneoonine/circleci-separate-pipeline/pipeline \
               --header 'Circle-Token: ${CIRCLECI_API_KEY}' \
