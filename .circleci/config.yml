@@ -7,12 +7,14 @@ jobs:
     docker:
       - image: ariv3ra/terraform-gcp:tf-v0.14.2
     steps:
-      - run: echo $CIRCLE_CONTINUATION_KEY
+      - run: echo KAK
 
-      
+
 workflows:
   approve-me:
     jobs:
       - approve-poc:
-          context: approver
           type: approval
+      - console-log:
+          name: nothings
+          context: approver
