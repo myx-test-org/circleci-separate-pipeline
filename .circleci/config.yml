@@ -14,4 +14,5 @@ workflows:
   approve-me:
     jobs:
       - approve-poc:
+          context: approver
           type: approval
