@@ -2,69 +2,16 @@ version: 2.1
 
 setup: true
 
-orbs:
-  path-filtering: circleci/path-filtering@0.1.3
-
-
 jobs:
   console-log:
     docker:
       - image: ariv3ra/terraform-gcp:tf-v0.14.2
     steps:
       - run: echo $CIRCLE_CONTINUATION_KEY
-  trigger-another:
-    docker:
-      - image: ariv3ra/terraform-gcp:tf-v0.14.2
-    steps:
-      - run:
-          name: Kick off new pipeline
-          command: |
-            echo CIRCLECI_API_KEY: $CIRCLECI_API_KEY
-            echo API_TOKEN: $API_TOKEN
-            curl --request POST \
-              --url https://circleci.com/api/v2/project/github/github/myx-oneoonine/circleci-separate-pipeline/pipeline \
-              --header 'Circle-Token: fc52ae173eddd950703cac265e346a994d21c8f2' \
-              --header 'content-type: application/json' \
-              --data '{"parameters":{"triggered_2":true}}'
-
-
-        # curl --location --request POST 'https://circleci.com/api/v2/project/(vcs)/(org)/(project)/pipeline' \
-        # --header 'Content-Type: application/json' \
-        # -u "${API_TOKEN}"
-
-
-
-
-              # curl --request POST \
-              #   --url https://circleci.com/api/v2/project/gh/zmarkan/pinging-me-softly/pipeline \
-              #   --header "Circle-Token: $CIRCLECI_API_KEY" \
-              #   --header "content-type: application/json" \
-              #   --data '{"branch":"main","parameters":{"image-name":"'$DOCKER_LOGIN"/"$CIRCLE_PROJECT_REPONAME":"0.1.<< pipeline.number >>'"}}'
-
 
 
 workflows:
-  check-updated-files:
+  approve-me:
     jobs:
-      - console-log
-      - path-filtering/filter:
-          name: check-updated-files
-          mapping: |
-            app/src1/.* build-src-1 true
-            app/src2/.* build-src-2 true
-          base-revision: main
-          config-path: .circleci/continue_pipeline.yml
-      - trigger-another:
-          name: "trigger!!!"
-          requires: 
-            - check-updated-files
-  # check-updated-files2:
-  #   jobs:
-  #     - console-log
-  #     - path-filtering/filter:
-  #         name: check-updated-files
-  #         mapping: |
-  #           app/src1/.* build-src-1 true
-  #           app/src2/.* build-src-2 true
-  #         base-revision: main
-  #         config-path: .circleci/continue_pipeline.yml
+      - approve-poc:
+          type: approval
