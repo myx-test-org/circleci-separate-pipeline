@@ -11,10 +11,12 @@ jobs:
 
 
 workflows:
-  approve-me:
+  approve-poc:
     jobs:
-      - approve-poc:
+      - approve-me:
           type: approval
       - console-log:
           name: nothings
+          requires:
+            - approve-me
           context: approver
