@@ -14,10 +14,10 @@ workflows:
   approve-poc:
     jobs:
       - approve-me:
-          context: approver
           type: approval
       - console-log:
           name: nothings
+          context: approver
           requires:
             - approve-me
           
